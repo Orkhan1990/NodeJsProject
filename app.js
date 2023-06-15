@@ -13,6 +13,7 @@ mongoose.connect(CONNECTION_STRING);
 
 app.use(express.urlencoded());
 app.use(express.json());
+app.use('/public',express.static(path.resolve('public')));
 app.use(blogRoute);
 app.use(userRoute);
 

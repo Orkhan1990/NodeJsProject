@@ -9,7 +9,7 @@ import multer from 'multer';
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, '/public/uploads')
+      cb(null, 'public/uploads')
     },
     filename: function (req, file, cb) {
         cb(null,file.originalname)
@@ -34,10 +34,10 @@ router.get('/api/v1/users/:id',async(req,res)=>{
     const user= await User.findById(req.params.id);
     res.status(200).send(user); 
 })
-router.post('/api/v1/register',upload.single('uploaded_file'),async(req,res)=>{
-    console.log(req.file);
-    console.log(req.body);
-    const newUser=new User(req.body);
+router.post('/api/v1/register',upload.single('image'),async(req,res)=>{
+      console.log(req.file);
+   const {path}=req.file;
+    const newUser=new User({...req.body,image:path});
     await newUser.save();
     res.status(201).send('Created'); 
 })
